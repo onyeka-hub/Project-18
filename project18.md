@@ -321,7 +321,7 @@ Complete the rest of the codes yourself, the resulting configuration structure i
     |     ├── ... (module .tf files) 
     |   ├── compute
     |     ├── ... (module .tf files) 
-    |   ├── network
+    |   ├── vpc
     |     ├── ... (module .tf files)
     |   ├── security
     |     ├── ... (module .tf files)
@@ -335,6 +335,8 @@ Complete the rest of the codes yourself, the resulting configuration structure i
 
 ```
 Now, the code is much more well-structured and can be easily read, edited and reused by your DevOps team members.
+
+You can view the code at : https://github.com/onyeka-hub/Terraform-Project-19.git
 
 **BLOCKERS**: Your website would not be available because the userdata scripts we added to the launch template does not contain the latest endpoints for EFS, ALB and RDS and also our AMI is not properly configured, so how do we fix this?
 
