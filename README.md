@@ -10,7 +10,8 @@ Firstly, we will explore alternative Terraform backends.
 ### Introducing Backend on S3
 
 Each Terraform configuration can specify a backend, which defines where and how operations are performed, where state snapshots are stored, etc.
-Take a peek into what the states file looks like. It is basically where terraform stores all the state of the infrastructure in **json** format.
+
+Take a peep into what the states file looks like. It is basically where terraform stores all the state of the infrastructure in **json** format.
 
 So far, we have been using the default backend, which is the local backend – it requires no configuration, and the states file is stored locally. This mode can be suitable for learning purposes, but it is not a robust solution, so it is better to store it in some more reliable and durable storage.
 
@@ -115,38 +116,13 @@ Before you run terraform apply let us add an output so that the S3 bucket **Amaz
 Create a new file and name it **output.tf** and add below code.
 
 ```
-output "ext_lb_dns_name" {
-  value = module.alb.ext_lb_dns_name
+output "s3_bucket_arn" {
+  value       = aws_s3_bucket.terraform-state.arn
+  description = "The ARN of the S3 bucket"
 }
-
-output "Jenkins-public-ip" {
-  value = module.compute.Jenkins-public-ip
-  description = "Jenkins public ip"
-}
-
-output "Jenkins-instance-state" {
-  value = module.compute.Jenkins-instance-state
-  description = "Jenkins instance state"
-}
-
-output "sonarqube-public-ip" {
-  value = module.compute.sonarqube-public-ip
-  description = "Jenkins public ip"
-}
-
-output "sonarqube-instance-state" {
-  value = module.compute.sonarqube-instance-state
-  description = "Jenkins instance state"
-}
-
-output "artifactory-public-ip" {
-  value = module.compute.artifactory-public-ip
-  description = "Jenkins public ip"
-}
-
-output "artifactory-instance-state" {
-  value = module.compute.artifactory-instance-state
-  description = "Jenkins instance state"
+output "dynamodb_table_name" {
+  value       = aws_dynamodb_table.terraform_locks.name
+  description = "The name of the DynamoDB table"
 }
 ```
 
@@ -195,7 +171,6 @@ variable "images" {
     }
 }
 ```
-
 
 To select an appropriate AMI per region, we will use a lookup function which has following syntax: **lookup(map, key, [default]).**
 
